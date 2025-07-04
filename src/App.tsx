@@ -7,6 +7,7 @@ import FavoritesPage from './pages/FavoritesPage';
 import CreateRecipePage from './pages/CreateRecipePage';
 import RecipeDetailPage from './pages/RecipeDetailPage';
 import './App.css';
+import StatsPage from './pages/Statspage.tsx';
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
               <Route path="/favoritas" element={<FavoritesPage />} />
               <Route path="/crear" element={<CreateRecipePage />} />
               <Route path="/receta/:id" element={<RecipeDetailPage />} />
+              <Route path="/estadisticas" element={<StatsPage />} />
             </Routes>
           </main>
         </div>
