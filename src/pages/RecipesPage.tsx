@@ -49,9 +49,18 @@ const RecipesPage: React.FC = () => {
         selectedDifficulty={selectedDifficulty}
         onSearchChange={setSearchTerm}
         onCategoryChange={setSelectedCategory}
-        onDifficultyChange={setSelectedDifficulty}
+        onDifficultyChange={(value) => setSelectedDifficulty(value.toLowerCase())}
         categories={categories}
       />
+
+     {(selectedCategory || selectedDifficulty || searchTerm) && (
+        <p className="active-filters">
+          <strong>Filtros activos:</strong>
+          {searchTerm && <> 🔍 "{searchTerm}"</>}
+          {selectedCategory && <> • Categoría: {selectedCategory}</>}
+          {selectedDifficulty && <> • Dificultad: {selectedDifficulty}</>}
+        </p>
+      )}
 
       <div className="results-info">
         <p className="results-count">

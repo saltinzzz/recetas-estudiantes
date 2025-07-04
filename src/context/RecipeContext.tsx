@@ -11,6 +11,8 @@ interface RecipeContextType {
   removeFromFavoritos: (id: number) => void;
   isFavorito: (id: number) => boolean;
   addReceta: (receta: Omit<Recipe, 'id'>) => void;
+  difficultyFilter: string;
+  filterByDifficulty: (nivel: string) => Recipe[];
 }
 
 export const RecipeContext = createContext<RecipeContextType | undefined>(undefined);
@@ -22,6 +24,7 @@ interface RecipeProviderProps {
 export const RecipeProvider: React.FC<RecipeProviderProps> = ({ children }) => {
   const [recetas, setRecetas] = useState<Recipe[]>(recetasData.recetas as Recipe[]);
   const [favoritos, setFavoritos] = useState<number[]>([]);
+  const [difficultyFilter, setDifficultyFilter] = useState<string>(''); 
 
   // useEffect para cargar favoritos del localStorage
   useEffect(() => {
@@ -57,6 +60,14 @@ export const RecipeProvider: React.FC<RecipeProviderProps> = ({ children }) => {
     setRecetas(prev => [...prev, receta]);
   };
 
+  const filterByDifficulty = (nivel: string): Recipe[] => {
+    setDifficultyFilter(nivel);
+    if (!nivel) return recetas;
+    return recetas.filter(receta =>
+      receta.dificultad.toLowerCase() === nivel.toLowerCase()
+    );
+  };
+
   const value = {
     recetas,
     favoritos,
@@ -64,6 +75,8 @@ export const RecipeProvider: React.FC<RecipeProviderProps> = ({ children }) => {
     removeFromFavoritos,
     isFavorito,
     addReceta,
+    difficultyFilter,
+    filterByDifficulty
   };
 
   return (
